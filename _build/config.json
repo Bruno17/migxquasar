@@ -1,0 +1,97 @@
+{
+  "name":"migxquasar",
+  "lowCaseName":"migxquasar",
+  "description":"",
+  "author":"",
+  "version":"0.1.0-alpha",
+  "package":{
+    "elements":{
+      "categories":[
+        
+      ],
+      "snippets":[
+        
+      ],
+      "chunks":[
+        {
+          "source":0,
+          "property_preprocess":false,
+          "description":"",
+          "editor_type":0,
+          "cache_type":0,
+          "locked":false,
+          "properties":[
+            
+          ],
+          "static":false,
+          "static_file":"",
+          "name":"migxquasar_app",
+          "file":"migxquasar_app.chunk.html"
+        },
+        {
+          "source":0,
+          "property_preprocess":false,
+          "description":"",
+          "editor_type":0,
+          "cache_type":0,
+          "locked":false,
+          "properties":null,
+          "static":false,
+          "static_file":"",
+          "name":"migxquasar_resourcelist",
+          "file":"migxquasar_resourcelist.chunk.html"
+        },
+        {
+          "source":0,
+          "property_preprocess":false,
+          "description":"",
+          "editor_type":0,
+          "cache_type":0,
+          "locked":false,
+          "properties":null,
+          "static":false,
+          "static_file":"",
+          "name":"migxquasar_tvlist",
+          "file":"migxquasar_tvlist.chunk.html"
+        }
+      ],
+      "templates":[
+        {
+          "source":0,
+          "property_preprocess":false,
+          "description":"",
+          "editor_type":0,
+          "icon":"",
+          "template_type":0,
+          "locked":false,
+          "properties":[
+            
+          ],
+          "static":false,
+          "static_file":"",
+          "name":"migxquasar",
+          "file":"migxquasar.template.html"
+        },
+        {
+          "source":0,
+          "property_preprocess":false,
+          "description":"",
+          "editor_type":0,
+          "icon":"",
+          "template_type":0,
+          "locked":false,
+          "properties":[
+            
+          ],
+          "static":false,
+          "static_file":"",
+          "name":"migxquasar2",
+          "file":"migxquasar2.template.html"
+        }
+      ],
+      "plugins":[
+        
+      ]
+    }
+  }
+}
