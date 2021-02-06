@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <title>[[++site_name]] - [[+pagetitle]]</title>
+    <base href="[[!++site_url]]" />    
+    
+    <link rel="shortcut icon" href="/assets/ico/favicon.ico">
+    
+  <!-- Do you need Material Icons? -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
+
+  <!-- Do you need Fontawesome? -->
+  <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+
+  <!-- Do you need Ionicons? -->
+  <link href="https://cdn.jsdelivr.net/npm/ionicons@^4.0.0/dist/css/ionicons.min.css" rel="stylesheet">
+
+  <!-- Do you need MDI? -->
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@^3.0.0/css/materialdesignicons.min.css" rel="stylesheet">
+
+  <!-- Do you need all animations? -->
+  <link href="https://cdn.jsdelivr.net/npm/animate.css@^3.5.2/animate.min.css" rel="stylesheet">
+
+
+  <!--
+    Finally, add Quasar's CSS:
+    Replace version below (1.0.3) with your desired version of Quasar.
+    Add ".rtl" for the RTL support (example: quasar.rtl.min.css).
+  -->
+  <link href="https://cdn.jsdelivr.net/npm/quasar@^1.9.16/dist/quasar.min.css" rel="stylesheet" type="text/css">
+  
+
+
+</head>
+
+<body>
+    
+<div id="q-app" class="">  
+
+<div class="row justify-center">
+  <q-layout container view="lhh LpR lff" class="shadow-3 rounded-borders " style="max-width:1000px; height:calc(100vh - 20px); margin-top:10px;" >
+      <q-header reveal class="bg-black">
+        <q-toolbar>
+          <q-btn flat @click="drawerLeft = !drawerLeft" round dense icon="menu" />
+         </q-toolbar>
+      </q-header>      
+      
+    <q-drawer v-model="drawerLeft" show-if-above :width="200" :breakpoint="700" elevated content-class="">
+      <q-scroll-area class="fit">
+        <q-list bordered separator>
+          <template v-for="resource in resourcelist" :key="resource.id">        
+            <q-item clickable v-ripple @click="loadResource(resource.id)">
+              <q-item-section>{{resource.pagetitle}}</q-item-section>
+            </q-item>
+          </template> 
+        </q-list>
+      </q-scroll-area>
+    </q-drawer>
+
+    <q-page-container>
+      <div class="bg-grey-2 q-pa-md rounded-borders">    
+        <div class="page-header">
+          <h2>{{resourcevalues.pagetitle}}</h2>
+        </div> 
+        
+        <q-btn label="Save" color="primary" @click="saveResource();" ></q-btn
+        
+        <div class="q-gutter-md">
+        
+<q-tabs v-model="current_tab" align="left">
+    <q-tab v-for="(formtab,tabname) in uiSchema" v-bind:name="tabname" v-bind:label="formtab.label"></q-tab>
+</q-tabs>        
+
+<q-tab-panels v-model="current_tab" animated>
+  <template v-for="(formtab,tabname) in uiSchema">
+  <q-tab-panel v-bind:name="tabname" class="q-gutter-md">  
+    <template v-if="formtab.type == 'formrepeater'">
+        <template v-for="(record,index) in resourcevalues[formtab.field]">
+            
+    <vue-form-json-schema
+      
+      :model="record"
+      :schema="schema"
+      :ui-schema="formtab.ui"
+      v-on:change=function(value){onChange(value,formtab.field,index)}
+      xxv-on:state-change="onChangeState"
+      xxv-on:validated="onValidated"
+      class="q-gutter-md"
+    >
+    </vue-form-json-schema> 
+    <q-separator></q-separator>
+    
+        </template>
+      
+    </template>
+    <template v-else>
+    
+    <vue-form-json-schema
+      
+      :model="resourcevalues"
+      :schema="schema"
+      :ui-schema="formtab.ui"
+      v-on:change="onChange"
+      xxv-on:state-change="onChangeState"
+      xxv-on:validated="onValidated"
+      class="q-gutter-md"
+    >
+    </vue-form-json-schema>    
+    
+    </template>
+
+      
+  </q-tab-panel>
+  </template>
+</q-tab-panels>
+        
+</div> 
+      </div>        
+    </q-page-container>
+    
+  </q-layout> 
+  </div>
+</div>
+
+
+  <!-- Do you want IE support? Replace "1.0.3" with your desired Quasar version -->
+  <script src="https://cdn.jsdelivr.net/npm/quasar@^1.9.16/dist/quasar.ie.polyfills.umd.min.js"></script>
+
+  <!-- You need Vue too -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@latest/dist/vue.min.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+  <!--
+    Add Quasar's JS:
+    Replace version below (1.0.3) with your desired version of Quasar.
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/quasar@^1.9.16/dist/quasar.umd.min.js"></script>
+
+  <!--
+    If you want to add a Quasar Language pack (other than "en-us").
+    Notice "pt-br" in "i18n.pt-br.umd.min.js" for Brazilian Portuguese language pack.
+    Replace version below (1.0.0-beta.0) with your desired version of Quasar.
+    Also check final <script> tag below to enable the language
+    Language pack list: https://github.com/quasarframework/quasar/tree/dev/ui/lang
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/quasar@^1.9.16/dist/lang/de.umd.min.js"></script>
+
+  <!--
+    If you want to make Quasar components (not your own) use a specific set of icons (unless you're using Material Icons already).
+    Replace version below (1.0.3) with your desired version of Quasar.
+    Icon sets list: https://github.com/quasarframework/quasar/tree/dev/ui/icon-set
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/quasar@^1.9.16/dist/icon-set/fontawesome-v5.umd.min.js"></script>
+  
+  <script src="https://unpkg.com/vue-form-json-schema@latest/dist/vue-form-json-schema.umd.js"></script>
+  
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <script>
+  
+
+    // if using a Quasar language pack other than the default "en-us";
+    // requires the language pack style tag from above
+    Quasar.lang.set(Quasar.lang.de) // notice camel-case "ptBr"
+
+    // if you want Quasar components to use a specific icon library
+    // other than the default Material Icons;
+    // requires the icon set style tag from above
+    Quasar.iconSet.set(Quasar.iconSet.fontawesomeV5) // fontawesomeV5 is just an example
+
+    /*
+      Example kicking off the UI.
+      Obviously, adapt this to your specific needs.
+     */
+  </script>
+  
+[[$migxquasar_app]]
+
+
+</body>
+</html>
